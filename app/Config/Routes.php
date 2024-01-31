@@ -8,4 +8,14 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->post('/login', 'Auth::login');
 $routes->post('/register', 'Auth::register');
-$routes->resource('users');
+
+$routes->group('api', static function ($routes) {
+    // auth
+    $routes->post('login', 'Auth::login');
+    $routes->post('register', 'Auth::register');
+
+    // users
+    $routes->resource('users');
+    // koafit
+    $routes->resource('koafit', ['controller' => 'api\Koafit']);
+});
