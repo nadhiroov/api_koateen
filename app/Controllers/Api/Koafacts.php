@@ -6,11 +6,11 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\RESTful\ResourceController;
 
-class Koafit extends ResourceController
+class Koafacts extends ResourceController
 {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\M_koafit';
+    protected $modelName = 'App\Models\M_koafacts';
     protected $format    = 'json';
     /**
      * Return an array of resource objects, themselves in array format
@@ -27,7 +27,7 @@ class Koafit extends ResourceController
     {
         $data = $this->model->find($id);
         if (!$data) {
-            return $this->failNotFound('Data not found');
+            return $this->failNotFound('data not found');
         }
         return $this->respond(['status' => 1, 'data' => $data]);
     }
@@ -36,16 +36,14 @@ class Koafit extends ResourceController
     {
         $validation =  \Config\Services::validation();
         $validation->setRules([
-            'sport'     => 'required',
-            'level'     => 'required',
-            'time'      => 'required',
-            'kkal'      => 'required',
+            'title'     => 'required',
+            'content'     => 'required',
         ]);
 
         if (!$validation->withRequest($this->request)->run()) {
             return $this->failValidationErrors($validation->getErrors());
         }
-        // Insert a new exercise
+        
         $data = $this->request->getPost();
         try {
             $this->model->insert($data);
@@ -67,10 +65,8 @@ class Koafit extends ResourceController
         // Validate incoming request data
         $validation =  \Config\Services::validation();
         $validation->setRules([
-            'sport'     => 'required',
-            'level'     => 'required',
-            'time'      => 'required',
-            'kkal'      => 'required',
+            'title'     => 'required',
+            'content'     => 'required',
         ]);
 
         if (!$validation->withRequest($this->request)->run()) {
@@ -79,6 +75,7 @@ class Koafit extends ResourceController
 
         $data = $this->request->getJSON();
         $this->model->update($id, $data);
+
         return $this->respond(['status' => 1, 'message' => 'Data updated']);
     }
 

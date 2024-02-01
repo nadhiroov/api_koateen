@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class M_koafit extends Model
+class M_koafacts extends Model
 {
-    protected $table            = 'koafit';
+    protected $table            = 'koafacts';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['sport', 'level', 'time', 'kkal', 'image'];
+    protected $allowedFields    = ['title', 'content', 'creator_id'];
 
     // Dates
     protected $useTimestamps = true;

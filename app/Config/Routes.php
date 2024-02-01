@@ -16,6 +16,7 @@ $routes->group('api', static function ($routes) {
 
     // users
     $routes->resource('users');
-    // koafit
+    
     $routes->resource('koafit', ['controller' => 'api\Koafit']);
+    $routes->resource('koafacts', ['controller' => 'api\Koafacts']);
 });

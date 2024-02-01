@@ -16,13 +16,8 @@ class Users extends ResourceController
     // Index method (GET) - Retrieve all users
     public function index()
     {
-        $page = $this->request->getVar('page') ? (int) $this->request->getVar('page') : 1;
-        $perPage =
-        $this->request->getVar('limit') ? (int) $this->request->getVar('limit') : 10;
-        $offset = ($page - 1) * $perPage;
-        $exercises = $this->model->paginate($perPage, 'group1', $offset);
-        $pager = $this->model->pager;
-        return $this->respond(['data' => $exercises, 'pager' => $pager]);
+        $users = $this->model->findAll();
+        return $this->respond(['status' => 1, 'data' => $users]);
     }
 
     // Show method (GET) - Retrieve a single user by ID
