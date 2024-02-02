@@ -19,4 +19,5 @@ $routes->group('api', static function ($routes) {
     
     $routes->resource('koafit', ['controller' => 'api\Koafit']);
     $routes->resource('koafacts', ['controller' => 'api\Koafacts']);
+    $routes->resource('koachef', ['controller' => 'api\Koachef']);
 });
