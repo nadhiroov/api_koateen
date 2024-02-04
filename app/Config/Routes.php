@@ -16,6 +16,8 @@ $routes->group('api', static function ($routes) {
 
     // users
     $routes->resource('users');
+    $routes->resource('userdata', ['controller' => 'api\Userdata']);
+    $routes->resource('usergoal', ['controller' => 'api\Usergoal']);
     
     $routes->resource('koafit', ['controller' => 'api\Koafit']);
     $routes->resource('koafacts', ['controller' => 'api\Koafacts']);

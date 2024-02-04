@@ -47,7 +47,7 @@ class Auth extends ResourceController
 
     public function login()
     {
-        $data = $this->request->getPost('param');
+        $data = $this->request->getPost();
 
         $validation = \Config\Services::validation();
         $validation->setRules([
