@@ -59,7 +59,8 @@ class Userdata extends ResourceController
             $this->model->update($check[0]['id'], $data);
             return $this->respondUpdated([
                 'status'    => 1,
-                'message'   => 'succes'
+                'message'   => 'succes',
+                'data'      => $data
             ]);
         }
 
@@ -67,7 +68,8 @@ class Userdata extends ResourceController
             $this->model->insert($data);
             $return = [
                 'status'    => 1,
-                'message'   => 'succes'
+                'message'   => 'succes',
+                'data'      => $data
             ];
         } catch (\Exception $er) {
             $return = [
