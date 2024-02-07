@@ -84,21 +84,6 @@ class Koachef extends ResourceController
 
     public function update($id = null)
     {
-        // Validate incoming request data
-        $validation =  \Config\Services::validation();
-        $validation->setRules([
-            'type'         => 'required',
-            'title'         => 'required',
-            'ingredients'   => 'required',
-            'nutrisions'    => 'required',
-            'cook'          => 'required',
-            'calories'      => 'required',
-        ]);
-
-        if (!$validation->withRequest($this->request)->run()) {
-            return $this->failValidationErrors($validation->getErrors());
-        }
-
         $data = $this->request->getRawInput();
         $this->model->update($id, $data);
 
