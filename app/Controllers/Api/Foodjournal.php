@@ -90,7 +90,7 @@ class Foodjournal extends ResourceController
             return $this->failValidationErrors($validation->getErrors());
         }
 
-        $data = $this->request->getJSON();
+        $data = $this->request->getRawInput();
         $this->model->update($id, $data);
 
         return $this->respond(['status' => 1, 'message' => 'Data updated']);

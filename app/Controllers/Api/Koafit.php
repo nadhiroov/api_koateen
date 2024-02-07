@@ -45,8 +45,25 @@ class Koafit extends ResourceController
         if (!$validation->withRequest($this->request)->run()) {
             return $this->failValidationErrors($validation->getErrors());
         }
-        // Insert a new exercise
+        $image = $this->request->getFile('image');
+        if (!$image->isValid() || !in_array($image->getExtension(), ['jpg', 'jpeg', 'png', 'gif'])) {
+            return $this->fail('Invalid file type. Only JPG, JPEG, PNG, or GIF files are allowed.');
+        }
+        $imageName = $image->getRandomName();
+        try {
+            $img = \Config\Services::image();
+            $image->move("./image/koafit/", $imageName);
+            $img->withFile("./image/koafit/$imageName")->resize(1080, 1280, true)->save("./image/koafit/$imageName", 80);
+        } catch (\Exception $er) {
+            $data = [
+                'status'    => 0,
+                'title'     => 'error',
+                'message'   => $er->getMessage(),
+            ];
+        }
         $data = $this->request->getPost();
+        $data['image'] = $imageName;
+
         try {
             $this->model->insert($data);
             $return = [
@@ -64,7 +81,6 @@ class Koafit extends ResourceController
 
     public function update($id = null)
     {
-        // Validate incoming request data
         $validation =  \Config\Services::validation();
         $validation->setRules([
             'sport'     => 'required',
@@ -76,8 +92,7 @@ class Koafit extends ResourceController
         if (!$validation->withRequest($this->request)->run()) {
             return $this->failValidationErrors($validation->getErrors());
         }
-
-        $data = $this->request->getJSON();
+        $data = $this->request->getRawInput();
         $this->model->update($id, $data);
         return $this->respond(['status' => 1, 'message' => 'Data updated']);
     }

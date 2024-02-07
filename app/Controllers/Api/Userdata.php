@@ -82,18 +82,7 @@ class Userdata extends ResourceController
 
     public function update($id = null)
     {
-        // Validate incoming request data
-        $validation =  \Config\Services::validation();
-        $validation->setRules([
-            'title'     => 'required',
-            'content'     => 'required',
-        ]);
-
-        if (!$validation->withRequest($this->request)->run()) {
-            return $this->failValidationErrors($validation->getErrors());
-        }
-
-        $data = $this->request->getJSON();
+        $data = $this->request->getRawInput();
         $this->model->update($id, $data);
 
         return $this->respond(['status' => 1, 'message' => 'Data updated']);
