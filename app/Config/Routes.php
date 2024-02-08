@@ -23,7 +23,10 @@ $routes->group('api', static function ($routes) {
     $routes->resource('koafacts', ['controller' => 'api\Koafacts']);
     $routes->resource('koachef', ['controller' => 'api\Koachef']);
     $routes->resource('koafood', ['controller' => 'api\Koafood']);
-    $routes->resource('foodjournal', ['controller' => 'api\Foodjournal']);
+    $routes->resource('foodjournal', ['controller' => 'api\FoodJournal']);
+
+
+    $routes->resource('koafitJournal', ['controller' => 'api\KoafitJournal']);
     
-    $routes->get('consumption/(:any)/(:any)', 'Api\Foodjournal::getConsumption/$1/$2');
+    $routes->get('consumption/(:any)/(:any)', 'Api\FoodJournal::getConsumption/$1/$2');
 });

@@ -6,12 +6,13 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\RESTful\ResourceController;
 
-class FoodJournal extends ResourceController
+class KoafitJournal extends ResourceController
 {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\M_foodjournal';
+    protected $modelName = 'App\Models\M_koafitjournal';
     protected $format    = 'json';
+    
     /**
      * Return an array of resource objects, themselves in array format
      *
@@ -22,12 +23,12 @@ class FoodJournal extends ResourceController
         $data = $this->model->findAll();
         return $this->respond(['status' => 1, 'data' => $data]);
     }
-    
-    public function getConsumption($id = null, $day = null) {
-        $data = $this->model->select('food_journal.*, B.name, B.cal')->join('koafood B', 'B.id = foodId')->where(['userId' => $id, 'day' => $day])->findAll();
-        return $this->respond(['status' => 1, 'data' => $data]);
-    }
 
+    /**
+     * Return the properties of a resource object
+     *
+     * @return ResponseInterface
+     */
     public function show($id = null)
     {
         $data = $this->model->find($id);
@@ -37,14 +38,21 @@ class FoodJournal extends ResourceController
         return $this->respond(['status' => 1, 'data' => $data]);
     }
 
+    /**
+     * Create a new resource object, from "posted" parameters
+     *
+     * @return ResponseInterface
+     */
     public function create()
     {
         $validation =  \Config\Services::validation();
         $validation->setRules([
             'userId'    => 'required',
-            'foodId'    => 'required',
-            'type'      => 'required',
+            'koafitId'  => 'required',
             'day'       => 'required',
+            'time'      => 'required',
+            'percent'   => 'required',
+            'cal'       => 'required',
         ]);
 
         if (!$validation->withRequest($this->request)->run()) {
@@ -52,14 +60,6 @@ class FoodJournal extends ResourceController
         }
 
         $data = $this->request->getPost();
-        $check = $this->model->where(['userId' => $data['userId'], 'type' => $data['type']])->find();
-        if (!empty($check)) {
-            $this->model->update($check[0]['id'], $data);
-            return $this->respondUpdated([
-                'status'    => 1,
-                'message'   => 'succes'
-            ]);
-        }
 
         try {
             $this->model->insert($data);
@@ -78,18 +78,6 @@ class FoodJournal extends ResourceController
 
     public function update($id = null)
     {
-        $validation =  \Config\Services::validation();
-        $validation->setRules([
-            'userId'    => 'required',
-            'foodId'    => 'required',
-            'type'      => 'required',
-            'day'       => 'required',
-        ]);
-
-        if (!$validation->withRequest($this->request)->run()) {
-            return $this->failValidationErrors($validation->getErrors());
-        }
-
         $data = $this->request->getRawInput();
         $this->model->update($id, $data);
 
