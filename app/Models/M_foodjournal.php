@@ -12,7 +12,7 @@ class M_foodjournal extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['userId', 'foodId', 'type', 'day'];
+    protected $allowedFields    = ['userId', 'foodId', 'type', 'day', 'weight', 'cal'];
 
     // Dates
     protected $useTimestamps = true;

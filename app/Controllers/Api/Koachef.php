@@ -19,7 +19,14 @@ class Koachef extends ResourceController
      */
     public function index()
     {
-        $data = $this->model->findAll();
+        $filter = $this->request->getGet('filter');
+        $query = $this->model->orderBy('created_at', 'DESC');
+
+        if ($filter != null && $filter != '') {
+            $query->where('type', $filter);
+        }
+        $data = $query->findAll();
+
         return $this->respond(['status' => 1, 'data' => $data]);
     }
 

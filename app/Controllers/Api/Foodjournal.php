@@ -22,9 +22,10 @@ class FoodJournal extends ResourceController
         $data = $this->model->findAll();
         return $this->respond(['status' => 1, 'data' => $data]);
     }
-    
-    public function getConsumption($id = null, $day = null) {
-        $data = $this->model->select('food_journal.*, B.name, B.cal')->join('koafood B', 'B.id = foodId')->where(['userId' => $id, 'day' => $day])->findAll();
+
+    public function getConsumption($id = null, $day = null)
+    {
+        $data = $this->model->select('food_journal.*, B.name')->join('koafood B', 'B.id = foodId')->where(['userId' => $id, 'day' => $day])->findAll();
         return $this->respond(['status' => 1, 'data' => $data]);
     }
 
@@ -45,6 +46,8 @@ class FoodJournal extends ResourceController
             'foodId'    => 'required',
             'type'      => 'required',
             'day'       => 'required',
+            'weight'    => 'required',
+            'cal'       => 'required',
         ]);
 
         if (!$validation->withRequest($this->request)->run()) {
@@ -78,18 +81,6 @@ class FoodJournal extends ResourceController
 
     public function update($id = null)
     {
-        $validation =  \Config\Services::validation();
-        $validation->setRules([
-            'userId'    => 'required',
-            'foodId'    => 'required',
-            'type'      => 'required',
-            'day'       => 'required',
-        ]);
-
-        if (!$validation->withRequest($this->request)->run()) {
-            return $this->failValidationErrors($validation->getErrors());
-        }
-
         $data = $this->request->getRawInput();
         $this->model->update($id, $data);
 
