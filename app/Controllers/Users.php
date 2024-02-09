@@ -23,13 +23,13 @@ class Users extends ResourceController
     // Show method (GET) - Retrieve a single user by ID
     public function show($id = null)
     {
-        $user = $this->model->find($id);
+        $data = $this->model->find($id);
 
-        if (!$user) {
+        if (!$data) {
             return $this->failNotFound('User not found');
         }
 
-        return $this->respond($user);
+        return $this->respond(['status' => 1, 'data' => $data]);
     }
 
     // Create method (POST) - Create a new user

@@ -63,6 +63,7 @@ class Userdata extends ResourceController
                 'data'      => $data
             ]);
         }
+        $data['dayDate'] = date('Y-m-d');
 
         try {
             $this->model->insert($data);

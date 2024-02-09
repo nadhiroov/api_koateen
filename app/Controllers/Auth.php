@@ -48,17 +48,6 @@ class Auth extends ResourceController
     public function login()
     {
         $data = $this->request->getPost();
-
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'username' => 'required|min_length[3]',
-            'password' => 'required|min_length[8]',
-        ]);
-
-        if (!$validation->run($data)) {
-            return $this->fail($validation->getErrors(), 400);
-        }
-
         $user = $this->model->where('username', $data['username'])->where('deleted_at', null)->first();
         if ($user && password_verify($data['password'], $user['password'])) {
             return $this->respond(
