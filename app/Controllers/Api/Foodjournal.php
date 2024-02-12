@@ -29,6 +29,12 @@ class FoodJournal extends ResourceController
         return $this->respond(['status' => 1, 'data' => $data]);
     }
 
+    public function summary($id = null)
+    {
+        $data = $this->model->select('day, sum(cal) as totalCal')->where(['userId' => $id])->groupBy('day')->findAll();
+        return $this->respond(['status' => 1, 'data' => $data]);
+    }
+
     public function show($id = null)
     {
         $data = $this->model->find($id);
@@ -55,7 +61,7 @@ class FoodJournal extends ResourceController
         }
 
         $data = $this->request->getPost();
-        $check = $this->model->where(['userId' => $data['userId'], 'type' => $data['type']])->find();
+        $check = $this->model->where(['userId' => $data['userId'], 'type' => $data['type'], 'day' => 'day'])->find();
         if (!empty($check)) {
             $this->model->update($check[0]['id'], $data);
             return $this->respondUpdated([
