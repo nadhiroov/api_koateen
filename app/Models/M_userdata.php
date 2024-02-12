@@ -12,7 +12,7 @@ class M_userdata extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['userId', 'units', 'gender', 'weight', 'age', 'height', 'level', 'bmi', 'bmiLevel', 'dayDate'];
+    protected $allowedFields    = ['userId', 'units', 'gender', 'weight', 'age', 'height', 'level', 'bmi', 'bmiLevel', 'dayDate', 'bmr', 'needCalories'];
 
     // Dates
     protected $useTimestamps = true;

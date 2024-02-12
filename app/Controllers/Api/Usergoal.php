@@ -38,9 +38,6 @@ class Usergoal extends ResourceController
         $validation->setRules([
             'userId'        => 'required',
             'want'          => 'required',
-            'weightGoal'    => 'required',
-            'weight'        => 'required',
-            'diet'          => 'required',
         ]);
 
         if (!$validation->withRequest($this->request)->run()) {
