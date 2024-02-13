@@ -25,7 +25,7 @@ class FoodJournal extends ResourceController
 
     public function getConsumption($id = null, $day = null)
     {
-        $data = $this->model->select('food_journal.*, B.name')->join('koafood B', 'B.id = foodId')->where(['userId' => $id, 'day' => $day])->findAll();
+        $data = $this->model->select('food_journal.*, B.name')->join('koafood B', 'B.id = foodId')->where(['food_journal.userId' => $id, 'day' => $day])->findAll();
         return $this->respond(['status' => 1, 'data' => $data]);
     }
 

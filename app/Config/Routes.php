@@ -26,6 +26,7 @@ $routes->group('api', static function ($routes) {
     // food
     $routes->get('koafood/summary/(:any)', 'Api\FoodJournal::summary/$1');
     $routes->get('koafood/consumption/(:any)/(:any)', 'Api\FoodJournal::getConsumption/$1/$2');
+    $routes->get('koafood/myMenu/(:num)', 'Api\Koafood::myMenu/$1');
 
     $routes->resource('koafood', ['controller' => 'api\Koafood']);
     $routes->resource('foodjournal', ['controller' => 'api\FoodJournal']);

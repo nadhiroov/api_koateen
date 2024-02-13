@@ -157,7 +157,7 @@ class Userdata extends ResourceController
             $factor = $gender == 'Male' ? 2.0 : 1.8;
         }
         $needCal = $bmr * $factor;
-        if ($bmi > 18.5) {
+        if ($bmi < 18.5) {
             $needCal += 500;
         }
         return ceil($needCal);

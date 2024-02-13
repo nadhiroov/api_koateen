@@ -12,7 +12,7 @@ class M_koafood extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['name', 'type', 'weight', 'cal'];
+    protected $allowedFields    = ['name', 'type', 'weight', 'cal', 'userId'];
 
     // Dates
     protected $useTimestamps = true;

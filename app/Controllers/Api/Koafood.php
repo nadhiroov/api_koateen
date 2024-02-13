@@ -19,7 +19,13 @@ class Koafood extends ResourceController
      */
     public function index()
     {
-        $data = $this->model->orderBy('name')->findAll();
+        $data = $this->model->where('userId is NULL')->orderBy('name')->findAll();
+        return $this->respond(['status' => 1, 'data' => $data]);
+    }
+
+    public function myMenu($id)
+    {
+        $data = $this->model->where('userId', $id)->orderBy('name')->findAll();
         return $this->respond(['status' => 1, 'data' => $data]);
     }
 
@@ -37,7 +43,6 @@ class Koafood extends ResourceController
         $validation =  \Config\Services::validation();
         $validation->setRules([
             'name'      => 'required',
-            'type'      => 'required',
             'weight'    => 'required',
             'cal'       => 'required',
         ]);
