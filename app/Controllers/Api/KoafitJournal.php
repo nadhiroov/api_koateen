@@ -12,7 +12,7 @@ class KoafitJournal extends ResourceController
 
     protected $modelName = 'App\Models\M_koafitjournal';
     protected $format    = 'json';
-    
+
     /**
      * Return an array of resource objects, themselves in array format
      *
@@ -24,11 +24,12 @@ class KoafitJournal extends ResourceController
         return $this->respond(['status' => 1, 'data' => $data]);
     }
 
-    /**
-     * Return the properties of a resource object
-     *
-     * @return ResponseInterface
-     */
+    public function totalBurnedCalories($id = '', $day = '')
+    {
+        $data = $this->model->select('day, sum(cal) as totalCal')->where(['userId' => $id])->groupBy('day')->findAll();
+        return $this->respond(['status' => 1, 'data' => $data]);
+    }
+
     public function show($id = null)
     {
         $data = $this->model->find($id);

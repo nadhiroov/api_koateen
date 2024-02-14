@@ -19,7 +19,7 @@ class Koafit extends ResourceController
      */
     public function index()
     {
-        $data = $this->model->findAll();
+        $data = $this->model->orderBy('sport')->findAll();
         return $this->respond(['status' => 1, 'data' => $data]);
     }
 
