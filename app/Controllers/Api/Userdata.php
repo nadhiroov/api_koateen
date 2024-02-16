@@ -67,7 +67,6 @@ class Userdata extends ResourceController
 
         // count need calories
         $data['needCalories'] = $this->countNeedCal($data['level'], $data['gender'], $data['bmr'], $data['bmi']);
-
         $check = $this->model->where('userId', $data['userId'])->find();
         if (!empty($check)) {
             $this->model->update($check[0]['id'], $data);
