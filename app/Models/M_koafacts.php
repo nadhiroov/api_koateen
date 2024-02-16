@@ -12,7 +12,7 @@ class M_koafacts extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['title', 'content', 'creator_id'];
+    protected $allowedFields    = ['title', 'content', 'image', 'creator_id'];
 
     // Dates
     protected $useTimestamps = true;

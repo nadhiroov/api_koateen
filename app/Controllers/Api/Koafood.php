@@ -69,18 +69,6 @@ class Koafood extends ResourceController
 
     public function update($id = null)
     {
-        $validation =  \Config\Services::validation();
-        $validation->setRules([
-            'name'      => 'required',
-            'type'      => 'required',
-            'weight'    => 'required',
-            'cal'       => 'required',
-        ]);
-
-        if (!$validation->withRequest($this->request)->run()) {
-            return $this->failValidationErrors($validation->getErrors());
-        }
-
         $data = $this->request->getRawInput();
         $this->model->update($id, $data);
 

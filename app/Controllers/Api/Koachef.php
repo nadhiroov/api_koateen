@@ -49,6 +49,7 @@ class Koachef extends ResourceController
             'nutrisions'    => 'required',
             'cook'          => 'required',
             'calories'      => 'required',
+            'target'      => 'required',
         ]);
 
         if (!$validation->withRequest($this->request)->run()) {
@@ -92,9 +93,40 @@ class Koachef extends ResourceController
     public function update($id = null)
     {
         $data = $this->request->getRawInput();
-        $this->model->update($id, $data);
+        try {
+            $this->model->update($id, $data);
+            return $this->respond(['status' => 1, 'message' => 'Data updated']);
+        } catch (\Exception $er) {
+            return $this->fail(['status' => 0, 'message' => $er->getMessage()]);
+        }
+    }
 
-        return $this->respond(['status' => 1, 'message' => 'Data updated']);
+    public function editImage()
+    {
+        $image = $this->request->getFile('image');
+        $param = $this->request->getPost();
+        if (!$image->isValid() || !in_array($image->getExtension(), ['jpg', 'jpeg', 'png', 'gif'])) {
+            return $this->fail('Invalid file type. Only JPG, JPEG, PNG, or GIF files are allowed.');
+        }
+        $imageName = $image->getRandomName();
+        try {
+            $img = \Config\Services::image();
+            $image->move("./image/koachef/", $imageName);
+            $img->withFile("./image/koachef/$imageName")->resize(1080, 1280, true)->save("./image/koachef/$imageName", 80);
+        } catch (\Exception $er) {
+            $data = [
+                'status'    => 0,
+                'title'     => 'error',
+                'message'   => $er->getMessage(),
+            ];
+        }
+        $data['image'] = $imageName;
+        try {
+            $this->model->update($param['id'], $data);
+            return $this->respond(['status' => 1, 'message' => 'Data updated']);
+        } catch (\Exception $er) {
+            return $this->fail(['status' => 0, 'message' => $er->getMessage()]);
+        }
     }
 
     public function delete($id = null)

@@ -12,7 +12,7 @@ class M_koachef extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['type', 'title', 'ingredients', 'nutrisions', 'cook', 'calories', 'image', 'creator_id'];
+    protected $allowedFields    = ['type', 'title', 'ingredients', 'nutrisions', 'cook', 'calories', 'image', 'creator_id', 'target'];
 
     // Dates
     protected $useTimestamps = true;

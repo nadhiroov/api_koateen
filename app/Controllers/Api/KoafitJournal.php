@@ -24,9 +24,14 @@ class KoafitJournal extends ResourceController
         return $this->respond(['status' => 1, 'data' => $data]);
     }
 
-    public function totalBurnedCalories($id = '', $day = '')
+    public function summary($id = '')
     {
         $data = $this->model->select('day, sum(cal) as totalCal')->where(['userId' => $id])->groupBy('day')->findAll();
+        return $this->respond(['status' => 1, 'data' => $data]);
+    }
+
+    public function activity($id = '', $day = ''){
+        $data = $this->model->select('koafit_journal.*, B.sport')->join('koafit B', 'B.id = koafitId')->where(['koafit_journal.userId' => $id, 'day' => $day])->findAll();
         return $this->respond(['status' => 1, 'data' => $data]);
     }
 

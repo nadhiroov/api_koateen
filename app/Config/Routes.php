@@ -19,21 +19,26 @@ $routes->group('api', static function ($routes) {
     $routes->resource('userdata', ['controller' => 'api\Userdata']);
     $routes->resource('usergoal', ['controller' => 'api\Usergoal']);
 
-    $routes->get('koafit/totalCalories/(:any)/(:any)', 'Api\KoafitJournal::totalBurnedCalories/$1/$2');
-    $routes->resource('koafitJournal', ['controller' => 'api\KoafitJournal']);
+    // fit
+    $routes->get('koafit/summary/(:any)', 'Api\KoafitJournal::summary/$1');
+    $routes->get('koafit/activity/(:num)/(:num)', 'Api\KoafitJournal::activity/$1/$2');
+    $routes->resource('koafitJournal', ['controller' => 'Api\KoafitJournal']);
+
+    $routes->resource('koafit', ['controller' => 'Api\Koafit']);
+
+    // fact
+    $routes->post('koafacts/updateImage', 'Api\Koafacts::editImage');
+    $routes->resource('koafacts', ['controller' => 'Api\Koafacts']);
     
-    $routes->resource('koafit', ['controller' => 'api\Koafit']);
-    $routes->resource('koafacts', ['controller' => 'api\Koafacts']);
-    $routes->resource('koachef', ['controller' => 'api\Koachef']);
+    // chef
+    $routes->post('koachef/updateImage', 'Api\Koachef::editImage');
+    $routes->resource('koachef', ['controller' => 'Api\Koachef']);
 
     // food
     $routes->get('koafood/summary/(:any)', 'Api\FoodJournal::summary/$1');
     $routes->get('koafood/consumption/(:any)/(:any)', 'Api\FoodJournal::getConsumption/$1/$2');
     $routes->get('koafood/myMenu/(:num)', 'Api\Koafood::myMenu/$1');
 
-    $routes->resource('koafood', ['controller' => 'api\Koafood']);
-    $routes->resource('foodjournal', ['controller' => 'api\FoodJournal']);
-
-
-    
+    $routes->resource('koafood', ['controller' => 'Api\Koafood']);
+    $routes->resource('foodjournal', ['controller' => 'Api\FoodJournal']);
 });
