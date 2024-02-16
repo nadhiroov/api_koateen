@@ -60,6 +60,7 @@ class Userdata extends ResourceController
         $bmi = $this->countBMI($data['height'], $data['weight'], $data['age']);
         $data['bmi'] = $bmi['bmi'];
         $data['bmiLevel'] = $bmi['level'];
+        $data['recommendation'] = $bmi['recommendation'];
 
         // count BMR
         $data['bmr'] = $this->countBMR($data['gender'], $data['weight'], $data['height'], $data['age']);
@@ -116,25 +117,33 @@ class Userdata extends ResourceController
         if ($usia_tahun < 18) {
             if ($bmi < 18.5) {
                 $level = "Underweight";
+                $recom = "Increase Weight";
             } elseif ($bmi >= 18.5 && $bmi < 24.9) {
                 $level = "Normal weight";
+                $recom = "Maintain Weight";
             } elseif ($bmi >= 25 && $bmi < 29.9) {
                 $level = "Overweight";
+                $recom = "Lose Weight";
             } else {
                 $level = "Obesity";
+                $recom = "Lose Weight";
             }
         } else {
             if ($bmi < 18.5) {
                 $level = "Underweight";
+                $recom = "Increase Weight";
             } elseif ($bmi >= 18.5 && $bmi < 24.9) {
                 $level = "Normal weight";
+                $recom = "Maintain Weight";
             } elseif ($bmi >= 25 && $bmi < 29.9) {
                 $level = "Overweight";
+                $recom = "Lose Weight";
             } else {
                 $level = "Obesity";
+                $recom = "Lose Weight";
             }
         }
-        return ["bmi" => number_format($bmi, 2), "level" => $level];
+        return ["bmi" => number_format($bmi, 2), "level" => $level, "recommendation" => $recom];
     }
 
     private function countBMR($gender, $weight, $height, $age)

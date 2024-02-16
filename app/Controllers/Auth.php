@@ -8,11 +8,6 @@ use CodeIgniter\RESTful\ResourceController;
 
 class Auth extends ResourceController
 {
-    /**
-     * Return an array of resource objects, themselves in array format
-     *
-     * @return ResponseInterface
-     */
 
     public function __construct()
     {
@@ -21,12 +16,10 @@ class Auth extends ResourceController
 
     public function register()
     {
-        // Get the request data
-        $data = $this->request->getPost('param');
-
-        // Validate the input data (customize this based on your needs)
+        $data = $this->request->getPost();
         $validation = \Config\Services::validation();
         $validation->setRules([
+            'fullname' => 'required',
             'username' => 'required|min_length[3]|is_unique[m_users.username]',
             'email' => 'required|valid_email|is_unique[m_users.email]',
             'password' => 'required|min_length[8]',
@@ -35,14 +28,13 @@ class Auth extends ResourceController
         if (!$validation->run($data)) {
             return $this->fail($validation->getErrors(), 400);
         }
-
-        // Hash the password before saving it to the database
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-
-        // Save the user to the database
-        $this->model->insert($data);
-
-        return $this->respondCreated(['status' => 1, 'message' => 'User registered successfully']);
+        try {
+            $this->model->insert($data);
+            return $this->respondCreated(['status' => 1, 'message' => 'User registered successfully']);
+        } catch (\Exception $er) {
+            return $this->failServerError($er->getMessage());
+        }
     }
 
     public function login()

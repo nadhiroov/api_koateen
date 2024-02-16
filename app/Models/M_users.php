@@ -12,7 +12,7 @@ class M_users extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['username', 'password', 'email', 'photo'];
+    protected $allowedFields    = ['fullname', 'username', 'password', 'email', 'photo'];
 
     // Dates
     protected $useTimestamps = true;
