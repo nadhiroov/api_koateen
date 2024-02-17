@@ -31,8 +31,21 @@ class FoodJournal extends ResourceController
 
     public function summary($id = null)
     {
-        $data = $this->model->select('day, sum(cal) as totalCal')->where(['userId' => $id])->groupBy('day')->findAll();
-        return $this->respond(['status' => 1, 'data' => $data]);
+        $data = $this->model
+            ->select('day, sum(cal) as totalCal')
+            ->where(['userId' => $id])
+            ->orderBy('day', 'asc')
+            ->groupBy('day')
+            ->findAll();
+
+        $days = array_column($data, 'day');
+        $latestDay = max($days);
+        $startDay = max(1, $latestDay - 6);
+        $endDay = $latestDay;
+        $result = array_filter($data, function ($record) use ($startDay, $endDay) {
+            return $record['day'] >= $startDay && $record['day'] <= $endDay;
+        });
+        return $this->respond(['status' => 1, 'data' => array_values($result)]);
     }
 
     public function show($id = null)

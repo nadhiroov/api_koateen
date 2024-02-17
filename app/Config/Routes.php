@@ -20,7 +20,7 @@ $routes->group('api', static function ($routes) {
     $routes->resource('usergoal', ['controller' => 'api\Usergoal']);
 
     // fit
-    $routes->get('koafit/summary/(:any)', 'Api\KoafitJournal::summary/$1');
+    $routes->get('koafit/summary/(:any)', 'Api\KoafitJournal::getBurned/$1');
     $routes->get('koafit/activity/(:num)/(:num)', 'Api\KoafitJournal::activity/$1/$2');
     $routes->resource('koafitJournal', ['controller' => 'Api\KoafitJournal']);
 
