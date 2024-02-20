@@ -38,7 +38,11 @@ $routes->group('api', static function ($routes) {
     $routes->get('koafood/summary/(:any)', 'Api\FoodJournal::summary/$1');
     $routes->get('koafood/consumption/(:any)/(:any)', 'Api\FoodJournal::getConsumption/$1/$2');
     $routes->get('koafood/myMenu/(:num)', 'Api\Koafood::myMenu/$1');
-
+    
     $routes->resource('koafood', ['controller' => 'Api\Koafood']);
     $routes->resource('foodjournal', ['controller' => 'Api\FoodJournal']);
+    
+    // siklus haid
+    $routes->get('siklusHaid/userDetail/(:num)', 'Api\Siklushaid::detailUser/$1');
+    $routes->resource('siklusHaid', ['controller' => 'Api\Siklushaid']);
 });
