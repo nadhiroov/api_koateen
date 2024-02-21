@@ -21,7 +21,7 @@ class Siklushaid extends ResourceController
 
     public function detailUser($id = '')
     {
-        $data = $this->model->where('userId', $id)->find();
+        $data = $this->model->where('userId', $id)->orderBy('startDate')->find();
         return $this->respond(['status' => 1, 'data' => $data]);
     }
 
