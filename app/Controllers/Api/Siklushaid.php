@@ -108,6 +108,7 @@ class Siklushaid extends ResourceController
      */
     public function delete($id = null)
     {
-        //
+        $this->model->where('userId', $id)->delete();
+        return $this->respond(['status' => 1, 'message' => 'Data deleted']);
     }
 }
