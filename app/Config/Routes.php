@@ -45,4 +45,7 @@ $routes->group('api', static function ($routes) {
     // siklus haid
     $routes->get('siklusHaid/userDetail/(:num)', 'Api\Siklushaid::detailUser/$1');
     $routes->resource('siklusHaid', ['controller' => 'Api\Siklushaid']);
+
+    // foodtips
+    $routes->resource('foodtips', ['controller' => 'Api\Foodtips']);
 });
