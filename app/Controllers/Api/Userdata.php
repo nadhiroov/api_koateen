@@ -25,7 +25,7 @@ class Userdata extends ResourceController
 
     public function show($id = null)
     {
-        $data = $this->model->find($id);
+        $data = $this->model->where('userId', $id)->first();
         if (!$data) {
             return $this->failNotFound('data not found');
         }

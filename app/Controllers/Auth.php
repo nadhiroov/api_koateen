@@ -20,7 +20,7 @@ class Auth extends ResourceController
         $validation = \Config\Services::validation();
         $validation->setRules([
             'fullname' => 'required',
-            'username' => 'required|min_length[3]|is_unique[m_users.username]',
+            'username' => 'required|min_length[5]|is_unique[m_users.username]|alpha_dash',
             'email' => 'required|valid_email|is_unique[m_users.email]',
             'password' => 'required|min_length[8]',
         ]);
