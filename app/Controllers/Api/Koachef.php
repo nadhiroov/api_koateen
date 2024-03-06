@@ -22,6 +22,11 @@ class Koachef extends ResourceController
         $filter = $this->request->getGet('filter');
         $query = $this->model->orderBy('created_at', 'DESC');
 
+        $target = $this->request->getGet('target');
+        if ($target != null && $target != '') {
+            $query->where('target', $target);
+        }
+
         if ($filter != null && $filter != '') {
             $query->where('type', $filter);
         }
